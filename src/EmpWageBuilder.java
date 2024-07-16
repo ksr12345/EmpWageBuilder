@@ -3,12 +3,14 @@ public class EmpWageBuilder {
     public static final int Part_time = 1;
     public static final int Emp_Rate = 20;
     public static final int Working_days = 2;
+    public static final int Max_hrs_month = 10;
 
     public static void main(String[] args){
-        int emp_hrs = 0;
-        int emp_Wage = 0;
-        int total_emp_wage = 0;
-        for (int i =0; i<Working_days; i++) {
+        int emp_hrs;
+        int total_emp_hrs = 0;
+        int total_emp_days = 0;
+        while (total_emp_hrs <= Max_hrs_month && total_emp_days < Working_days) {
+            total_emp_days ++;
             int emp = (int) Math.floor(Math.random() * 10) % 3;
             switch (emp) {
                 case Full_time:
@@ -21,10 +23,10 @@ public class EmpWageBuilder {
                     emp_hrs = 0;
                     break;
             }
-            emp_Wage = emp_hrs*Emp_Rate;
-            System.out.println("Emp Wage: "+ emp_Wage);
-            total_emp_wage += emp_Wage;
+            total_emp_hrs += emp_hrs;
+            System.out.println("Day#: "+ total_emp_days +" Emp hrs: "+ emp_hrs);
         }
-        System.out.println("Total Emp Wage: "+ total_emp_wage);
+        int total_emp_wage = total_emp_hrs * Emp_Rate;
+        System.out.println("Total Employee Wage:" + total_emp_wage);
     }
 }
