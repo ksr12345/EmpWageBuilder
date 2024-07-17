@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 interface Emp_Manager{
     void find_wage();
     double show_wage();
@@ -28,17 +30,24 @@ public class EmpWageBuilder implements Emp_Manager{
         return this.total;
     }
 
+    public String get_c_name() {
+        return this.c_name;
+    }
+
     public static void main(String[] args){
-        EmpWageBuilder company1 = new EmpWageBuilder("Company 1", 20.0, 8);
-        EmpWageBuilder company2 = new EmpWageBuilder("Company 2", 25.0, 6);
+        ArrayList<Emp_Manager> companies = new ArrayList<>();
 
-        company1.find_wage();
-        company1.find_wage();
+        companies.add(new EmpWageBuilder("Company A", 20.0, 8));
+        companies.add(new EmpWageBuilder("Company B", 25.0, 6));
 
-        company2.find_wage();
-        company2.find_wage();
+        for (Emp_Manager company : companies) {
+            company.find_wage();
+            company.find_wage();
+        }
 
-        System.out.println("Total wage for " + company1.c_name + " is " + company1.show_wage());
-        System.out.println("Total wage for " + company2.c_name + " is " + company2.show_wage());
+        // Print total wages for each company
+        for (Emp_Manager company : companies) {
+            System.out.println("Total wage for " + ((EmpWageBuilder) company).get_c_name() + ": $" + company.show_wage());
+        }
     }
 }
