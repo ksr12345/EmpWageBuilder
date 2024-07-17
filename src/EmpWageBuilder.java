@@ -1,4 +1,10 @@
-public class EmpWageBuilder {
+interface Emp_Manager{
+    void find_wage();
+    double show_wage();
+}
+
+
+public class EmpWageBuilder implements Emp_Manager{
     private final String c_name;
     private final double rate_hr;
     private final int hrs_worked;
@@ -11,11 +17,13 @@ public class EmpWageBuilder {
         this.total = 0;
     }
 
+    @Override
     public void find_wage(){
         double daily_wage = this.hrs_worked*this.rate_hr;
         this.total += daily_wage;
     }
 
+    @Override
     public double show_wage(){
         return this.total;
     }
