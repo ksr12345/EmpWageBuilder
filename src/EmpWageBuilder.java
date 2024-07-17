@@ -1,7 +1,7 @@
-import java.util.ArrayList;
+import java.util.*;
 
 interface Emp_Manager{
-    void find_wage();
+    void find_wage(int hrs_worked);
     double show_wage();
 }
 
@@ -9,20 +9,21 @@ interface Emp_Manager{
 public class EmpWageBuilder implements Emp_Manager{
     private final String c_name;
     private final double rate_hr;
-    private final int hrs_worked;
+    private final List<Double> dailyWages;
     private double total;
 
-    public EmpWageBuilder(String c_name, double rate_hr, int hrs_worked){
+    public EmpWageBuilder(String c_name, double rate_hr){
         this.c_name = c_name;
         this.rate_hr = rate_hr;
-        this.hrs_worked = hrs_worked;
+        this.dailyWages = new ArrayList<>();
         this.total = 0;
     }
 
     @Override
-    public void find_wage(){
-        double daily_wage = this.hrs_worked*this.rate_hr;
-        this.total += daily_wage;
+    public void find_wage(int hrs_worked){
+        double dailyWage = hrs_worked * this.rate_hr;
+        this.dailyWages.add(dailyWage);
+        this.total += dailyWage;
     }
 
     @Override
@@ -30,24 +31,30 @@ public class EmpWageBuilder implements Emp_Manager{
         return this.total;
     }
 
-    public String get_c_name() {
+    public List<Double> getDailyWages() {
+        return this.dailyWages;
+    }
+
+    public String get_c_name(){
         return this.c_name;
     }
 
     public static void main(String[] args){
-        ArrayList<Emp_Manager> companies = new ArrayList<>();
+        List<Emp_Manager> companies = new ArrayList<>();
 
-        companies.add(new EmpWageBuilder("Company A", 20.0, 8));
-        companies.add(new EmpWageBuilder("Company B", 25.0, 6));
+        companies.add(new EmpWageBuilder("Company A", 20.0));
+        companies.add(new EmpWageBuilder("Company B", 25.0));
 
         for (Emp_Manager company : companies) {
-            company.find_wage();
-            company.find_wage();
+            company.find_wage(8);
+            company.find_wage(7);
         }
 
-        // Print total wages for each company
         for (Emp_Manager company : companies) {
-            System.out.println("Total wage for " + ((EmpWageBuilder) company).get_c_name() + ": $" + company.show_wage());
+            System.out.println("Company: " + ((EmpWageBuilder) company).get_c_name());
+            System.out.println("Total wage: " + company.show_wage());
+            System.out.println("Daily wages: " + ((EmpWageBuilder) company).getDailyWages());
+            System.out.println();
         }
     }
 }
