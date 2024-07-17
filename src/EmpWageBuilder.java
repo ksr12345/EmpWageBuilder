@@ -39,8 +39,17 @@ public class EmpWageBuilder implements Emp_Manager{
         return this.c_name;
     }
 
+    public static double getTotalWageByCompany(List<EmpWageBuilder> companies, String companyName) {
+        for (EmpWageBuilder company : companies) {
+            if (company.get_c_name().equals(companyName)) {
+                return company.show_wage();
+            }
+        }
+        return 0;
+    }
+
     public static void main(String[] args){
-        List<Emp_Manager> companies = new ArrayList<>();
+        List<EmpWageBuilder> companies = new ArrayList<>();
 
         companies.add(new EmpWageBuilder("Company A", 20.0));
         companies.add(new EmpWageBuilder("Company B", 25.0));
@@ -50,11 +59,15 @@ public class EmpWageBuilder implements Emp_Manager{
             company.find_wage(7);
         }
 
-        for (Emp_Manager company : companies) {
-            System.out.println("Company: " + ((EmpWageBuilder) company).get_c_name());
+        for (EmpWageBuilder company : companies) {
+            System.out.println("Company: " + company.get_c_name());
             System.out.println("Total wage: " + company.show_wage());
-            System.out.println("Daily wages: " + ((EmpWageBuilder) company).getDailyWages());
+            System.out.println("Daily wages: " + company.getDailyWages());
             System.out.println();
         }
+
+        String queryCompany = "Company A";
+        double totalWage = EmpWageBuilder.getTotalWageByCompany(companies, queryCompany);
+        System.out.println("Total wage for " + queryCompany + ": " + totalWage);
     }
 }
